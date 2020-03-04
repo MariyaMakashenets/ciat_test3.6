@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        table, th, td {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px;
+        }
+
+        th {
+            text-align: left;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Курсы валют</title>
+</head>
+<body>
+    <h1> История курса валюты {{ curr }}</h1>
+    <h2>Изменения курса</h2>
+    {% block curr_info %}
+        <table style="width:100%">
+            <tr>
+                <th>Период</th>
+                <th>Курс покупки</th>
+                <th>Курс продажи</th>
+                <th>Удалить</th>
+            </tr>
+            {% for row in curr_history %}
+                <tr>
+                    <td>{{ row.period }}</td>
+                    <td>{{ row.buying_rate }}</td>
+                    <td>{{ row.selling_rate }}</td>
+                    <td><a href="/currencies/currency_history/delete/{{ row.id }}/">Х</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+        <form method="post" action="/currencies/currency_history/{{curr_id}}/add/">{% csrf_token %}
+            {{ form.as_table }}
+            <button type="submit">Добавить курс на дату</button>
+        </form>
+        <form method="get" action="/currencies/currency_history/{{ curr_id }}/by_period">
+            <p>Выберите дату начала: <input type="date" name="datefrom"></p>
+            <p>Выберите дату конца: <input type="date" name="dateto"></p>
+            <button type="submit">Получить историю</button>
+        </form>
+    {% endblock %}
+    {% if errors %}
+        <ol>
+            {% for error in errors %}
+                <li><strong>{{ error }}</strong></li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        {% block content %}
+        {% endblock %}
+    {% endif %}
+</body>
+</html>

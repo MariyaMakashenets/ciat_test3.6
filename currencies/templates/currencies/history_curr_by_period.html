@@ -1,0 +1,19 @@
+{% extends 'currencies/history_curr.html' %}
+{% block content %}
+    <h2>Курсы валют за период с {{ datefrom }} по {{ dateto }}</h2>
+
+    <table style="width:100%">
+        <tr>
+            <th>Период</th>
+            <th>Курс продажи</th>
+            <th>Курс покупки</th>
+        </tr>
+        {% for row in curr_table %}
+            <tr>
+                <td>{{ row.period }}</td>
+                <td>{{ row.buying_rate }}</td>
+                <td>{{ row.selling_rate }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

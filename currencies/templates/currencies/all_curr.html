@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    table, th, td {
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 5px;
+    }
+    th {
+      text-align: left;
+    }
+    </style>
+    <meta charset="UTF-8">
+    <title>Курсы валют</title>
+</head>
+<body>
+    <h1> Курсы валют на {{ondate}}</h1>
+<table style="width:100%">
+  <tr>
+      <th>Валюта</th>
+      <th>Курс продажи</th>
+      <th>Курс покупки</th>
+  </tr>
+    {% for row in last_curr %}
+        <tr>
+            <td><a href="/currencies/currency_history/{{ row.curr_id}}">{{ row.curr }}</a></td>
+            <td>{{ row.buying_rate }}</td>
+            <td>{{ row.selling_rate }}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
